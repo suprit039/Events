@@ -1,0 +1,26 @@
+services:
+  - type: web
+    name: event-manager-backend
+    env: node
+    plan: free
+    buildCommand: npm install
+    startCommand: npm start
+    envVars:
+      - key: NODE_ENV
+        value: production
+      - key: MONGO_URI
+        fromDatabase:
+          name: event-manager-db
+          property: connectionString
+      - key: GOOGLE_CLIENT_ID
+        sync: false
+      - key: GOOGLE_CLIENT_SECRET
+        sync: false
+      - key: SESSION_SECRET
+        generateValue: true
+
+databases:
+  - name: event-manager-db
+    databaseName: event_platform
+    user: event_user
+    plan: free
